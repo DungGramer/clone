@@ -1,3 +1,5 @@
-# Telegram web code base (for studying only)
+# Clone List
 
-## Source: https://github.com/ladifire-opensource/web.telegram.org-source-code
+## Telegram
+
+## Trello
