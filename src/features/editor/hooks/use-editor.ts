@@ -1,7 +1,13 @@
+import { useAutoResize } from "@/features/editor/hooks/use-auto-resize";
 import { fabric } from "fabric";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 export const useEditor = () => {
+  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  useAutoResize({ container, canvas });
+
   const init = useCallback(
     ({
       initialCanvas,
@@ -39,6 +45,18 @@ export const useEditor = () => {
       initialCanvas.add(initialWorkspace);
       initialCanvas.centerObject(initialWorkspace);
       initialCanvas.clipPath = initialWorkspace; //? Make other objects structured within this workspace
+
+      setContainer(initialContainer);
+      setCanvas(initialCanvas);
+
+      const test = new fabric.Rect({
+        height: 100,
+        width: 100,
+        fill: "black",
+      });
+
+      initialCanvas.add(test);
+      initialCanvas.centerObject(test);
     },
     []
   );
