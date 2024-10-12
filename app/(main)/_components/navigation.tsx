@@ -1,5 +1,6 @@
 "use client";
 
+import DocumentList from "@/app/(main)/_components/document-list";
 import Item from "@/app/(main)/_components/item";
 import UserItem from "@/app/(main)/_components/user-item";
 import { api } from "@/convex/_generated/api";
@@ -134,9 +135,10 @@ const Navigation = () => {
           <Item onClick={handleCreate} label='New page' icon={PlusCircle} />
         </div>
         <div className='mt-4'>
-          {documents?.map((document) => (
+          {/* {documents?.map((document) => (
             <p key={document._id}>{document.title}</p>
-          ))}
+          ))} */}
+          <DocumentList />
         </div>
         <div
           onMouseDown={handleMouseDown}
