@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { api } from "@/convex/_generated/api";
+import { useSearch } from "@/hooks/use-search";
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import {
@@ -27,6 +28,7 @@ import { toast } from "sonner";
 import { useMediaQuery } from "usehooks-ts";
 
 const Navigation = () => {
+  const search = useSearch();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const documents = useQuery(api.documents.get);
@@ -144,7 +146,7 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item label='Search' icon={Search} isSearch onCLick={() => {}} />
+          <Item label='Search' icon={Search} isSearch onClick={search.onOpen} />
           <Item label='Settings' icon={Settings} />
           <Item onClick={handleCreate} label='New page' icon={PlusCircle} />
         </div>
