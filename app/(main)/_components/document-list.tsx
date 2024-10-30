@@ -15,11 +15,7 @@ interface DocumentListProps {
   data?: Doc<"documents">[];
 }
 
-const DocumentList = ({
-  parentDocumentId,
-  level = 0,
-  data,
-}: DocumentListProps) => {
+const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps) => {
   const params = useParams();
   const router = useRouter();
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});

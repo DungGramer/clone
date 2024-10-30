@@ -19,7 +19,7 @@ const TrashBox = () => {
   const remove = useMutation(api.documents.remove);
 
   const [search, setSearch] = useState("");
-  const filteredDocuments = documents?.filter((documents) => {
+  const filteredDocuments = documents?.filter((document) => {
     return document.title
       .toLocaleLowerCase()
       .includes(search.toLocaleLowerCase());
@@ -30,7 +30,7 @@ const TrashBox = () => {
   };
 
   const onRestore = (
-    event: MouseEvent<HTMLDivElement, MouseEvent>,
+    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     documentId: Id<"documents">
   ) => {
     event.stopPropagation();

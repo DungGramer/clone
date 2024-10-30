@@ -2,15 +2,14 @@
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenuLabel,
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SignOutButton, useUser } from "@clerk/clerk-react";
-import { ChevronLeft, ChevronsLeftRight } from "lucide-react";
+import { ChevronsLeftRight } from "lucide-react";
 
 const UserItem = () => {
   const { user } = useUser();

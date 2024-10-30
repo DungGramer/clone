@@ -55,7 +55,7 @@ const Item = ({
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
 
-  const onArchive = (event: MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onArchive = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
 
@@ -68,12 +68,12 @@ const Item = ({
     });
   };
 
-  const handleExpand = (event: MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleExpand = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
     onExpand?.();
   };
 
-  const onCreate = (event: MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const onCreate = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
 

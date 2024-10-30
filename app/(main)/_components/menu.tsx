@@ -1,22 +1,21 @@
 "use client";
 
-import { Id } from "@/convex/_generated/dataModel";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/clerk-react";
-import { mutation } from "@/convex/_generated/server";
-import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Trash } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useUser } from "@clerk/clerk-react";
+import { useMutation } from "convex/react";
+import { MoreHorizontal, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface MenuProps {
   documentId: Id<"documents">;
@@ -33,7 +32,7 @@ const Menu = ({ documentId }: MenuProps) => {
 
     toast.promise(promise, {
       loading: "Moving to trash...",
-      success: "Note moved to trash.",
+      success: "Note moved to trash!",
       error: "Failed to archive note.",
     });
 
@@ -53,7 +52,7 @@ const Menu = ({ documentId }: MenuProps) => {
         alignOffset={8}
         forceMount
       >
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onArchive}>
           <Trash className='h-4 w-4 mr-2' />
           Delete
         </DropdownMenuItem>

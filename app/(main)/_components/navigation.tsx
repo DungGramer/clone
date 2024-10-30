@@ -2,7 +2,6 @@
 
 import DocumentList from "@/app/(main)/_components/document-list";
 import Item from "@/app/(main)/_components/item";
-import Navbar from "./navbar";
 import TrashBox from "@/app/(main)/_components/trash-box";
 import UserItem from "@/app/(main)/_components/user-item";
 import {
@@ -14,7 +13,7 @@ import { api } from "@/convex/_generated/api";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { cn } from "@/lib/utils";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import {
   ChevronsLeft,
   MenuIcon,
@@ -25,9 +24,10 @@ import {
   Trash,
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { ElementRef, MouseEvent, useEffect, useRef, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useMediaQuery } from "usehooks-ts";
+import Navbar from "./navbar";
 
 const Navigation = () => {
   const router = useRouter();
@@ -74,7 +74,7 @@ const Navigation = () => {
   }, [pathname, isMobile]);
 
   const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => {
     event.preventDefault();
     event.stopPropagation();
@@ -84,7 +84,7 @@ const Navigation = () => {
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleMouseMove = (event: MouseEvent) => {
+  const handleMouseMove = (event: globalThis.MouseEvent) => {
     if (!isResizingRef.current) return;
     let newWidth = event.clientX;
 
