@@ -1,14 +1,24 @@
 "use client";
 
-import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
+import {
+  BlockNoteEditor,
+  filterSuggestionItems,
+  PartialBlock,
+} from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 // import "@blocknote/core/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-import { useCreateBlockNote } from "@blocknote/react";
+import {
+  getDefaultReactSlashMenuItems,
+  SuggestionMenuController,
+  useCreateBlockNote,
+} from "@blocknote/react";
 import { useTheme } from "next-themes";
 
+import { insertPageBreak } from "@/components/PageBreakBlock";
 import { useEdgeStore } from "@/lib/edgestore";
+import { schema } from "./PageBreakBlock";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -29,6 +39,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   };
 
   const editor: BlockNoteEditor = useCreateBlockNote({
+    schema,
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
       : undefined,
@@ -44,7 +55,22 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
         onChange={() => {
           onChange(JSON.stringify(editor.document, null, 2));
         }}
-      />
+        slashMenu={false}
+      >
+        <SuggestionMenuController
+          triggerCharacter='/'
+          getItems={async (query) =>
+            // Gets all default slash menu items and `insertAlert` item.
+            filterSuggestionItems(
+              [
+                ...getDefaultReactSlashMenuItems(editor),
+                insertPageBreak(editor),
+              ],
+              query
+            )
+          }
+        />
+      </BlockNoteView>
     </div>
   );
 };
