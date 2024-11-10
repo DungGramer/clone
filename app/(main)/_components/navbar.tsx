@@ -2,6 +2,7 @@
 
 import Banner from "@/app/(main)/_components/banner";
 import Menu from "@/app/(main)/_components/menu";
+import Presentation from "@/app/(main)/_components/preview";
 import { Publish } from "@/app/(main)/_components/publish";
 import Title from "@/app/(main)/_components/title";
 import { api } from "@/convex/_generated/api";
@@ -47,6 +48,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <div className='flex items-center justify-between w-full'>
           <Title initialData={document} />
           <div className='flex items-center gap-x-2'>
+            <Presentation initialData={document} />
             <Publish initialData={document} />
             <Menu documentId={document._id} />
           </div>

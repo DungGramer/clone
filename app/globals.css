@@ -82,3 +82,41 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+::-webkit-scrollbar {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-color: transparent;
+  background: transparent;
+  transition:
+    width 0.2s ease-in-out,
+    height 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  border-color: transparent;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: hsl(0deg 0% 62%);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(0deg 0% 46%);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}

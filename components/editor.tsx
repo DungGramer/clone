@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  BlockNoteEditor,
-  filterSuggestionItems,
-  PartialBlock,
-} from "@blocknote/core";
+import { filterSuggestionItems } from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 // import "@blocknote/core/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
@@ -38,11 +34,9 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     return response.url;
   };
 
-  const editor: BlockNoteEditor = useCreateBlockNote({
+  const editor = useCreateBlockNote({
     schema,
-    initialContent: initialContent
-      ? (JSON.parse(initialContent) as PartialBlock[])
-      : undefined,
+    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
     uploadFile: handleUpload,
   });
 
