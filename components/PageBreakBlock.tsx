@@ -19,7 +19,7 @@ const PageBreakBlock = createReactBlockSpec(
       textAlignment: defaultProps.textAlignment,
       textColor: defaultProps.textColor,
     },
-    content: "inline",
+    content: "none",
   },
   { render: () => <hr style={{ margin: "24px 0", width: "100%" }} /> }
 );
