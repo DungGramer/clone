@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Doc } from "@/convex/_generated/dataModel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface PresentationProps {
   initialData: Doc<"documents">;
@@ -58,8 +58,10 @@ const Presentation = ({ initialData, buttonClassName }: PresentationProps) => {
   };
 
   // Handlers for navigating slides
-  const nextSlide = () =>
-    setCurrentSlide((prev) => Math.min(prev + 1, slides.length - 1));
+  const nextSlide = useCallback(
+    () => setCurrentSlide((prev) => Math.min(prev + 1, slides.length - 1)),
+    [slides.length]
+  );
   const prevSlide = () => setCurrentSlide((prev) => Math.max(prev - 1, 0));
 
   // Scroll handlers
@@ -109,7 +111,7 @@ const Presentation = ({ initialData, buttonClassName }: PresentationProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeydown);
     };
-  }, [isDialogOpen]);
+  }, [isDialogOpen, nextSlide]);
 
   return (
     <Dialog

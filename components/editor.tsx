@@ -1,8 +1,14 @@
 "use client";
 
-import { filterSuggestionItems } from "@blocknote/core";
+import {
+  combineByGroup,
+  filterSuggestionItems,
+  locales,
+} from "@blocknote/core";
 import "@blocknote/core/fonts/inter.css";
 // import "@blocknote/core/style.css";
+import { insertPageBreak } from "@/components/PageBreakBlock";
+import { useEdgeStore } from "@/lib/edgestore";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import {
@@ -10,10 +16,14 @@ import {
   SuggestionMenuController,
   useCreateBlockNote,
 } from "@blocknote/react";
+import {
+  getMultiColumnSlashMenuItems,
+  multiColumnDropCursor,
+  locales as multiColumnLocales,
+  withMultiColumn,
+} from "@blocknote/xl-multi-column";
 import { useTheme } from "next-themes";
-
-import { insertPageBreak } from "@/components/PageBreakBlock";
-import { useEdgeStore } from "@/lib/edgestore";
+import { useMemo } from "react";
 import { schema } from "./PageBreakBlock";
 
 interface EditorProps {
@@ -35,10 +45,27 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   };
 
   const editor = useCreateBlockNote({
-    schema,
+    schema: withMultiColumn(schema),
+    dropCursor: multiColumnDropCursor,
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
     uploadFile: handleUpload,
+    dictionary: {
+      ...locales.en,
+      multi_column: multiColumnLocales.en,
+    },
   });
+
+  const getSlashMenuItems = useMemo(() => {
+    return async (query: string) =>
+      filterSuggestionItems(
+        combineByGroup(
+          getDefaultReactSlashMenuItems(editor),
+          getMultiColumnSlashMenuItems(editor),
+          [insertPageBreak(editor as unknown as never)]
+        ),
+        query
+      );
+  }, [editor]);
 
   return (
     <div>
@@ -53,16 +80,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
       >
         <SuggestionMenuController
           triggerCharacter='/'
-          getItems={async (query) =>
-            // Gets all default slash menu items and `insertAlert` item.
-            filterSuggestionItems(
-              [
-                ...getDefaultReactSlashMenuItems(editor),
-                insertPageBreak(editor),
-              ],
-              query
-            )
-          }
+          getItems={getSlashMenuItems}
         />
       </BlockNoteView>
     </div>

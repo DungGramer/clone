@@ -3,7 +3,6 @@ import {
   BlockSchemaWithBlock,
   defaultBlockSpecs,
   DefaultInlineContentSchema,
-  defaultProps,
   DefaultStyleSchema,
   insertOrUpdateBlock,
   PartialBlock,
@@ -16,8 +15,8 @@ const PageBreakBlock = createReactBlockSpec(
   {
     type: "page_break",
     propSchema: {
-      textAlignment: defaultProps.textAlignment,
-      textColor: defaultProps.textColor,
+      // textAlignment: defaultProps.textAlignment,
+      // textColor: defaultProps.textColor,
     },
     content: "none",
   },
@@ -35,13 +34,14 @@ export const schema = BlockNoteSchema.create({
 
 export const insertPageBreak = (editor: typeof schema.BlockNoteEditor) => ({
   title: "Page Break",
+  subtext: "Separate sections of your presentation",
   onItemClick: () => {
     insertOrUpdateBlock(editor, {
       type: "page_break",
     });
   },
   aliases: ["page_break", "new_page", "separator", "---"],
-  group: "Other",
+  group: "Basic blocks",
   icon: <Minus />, // Choose an icon that represents a page break or separator
 });
 
