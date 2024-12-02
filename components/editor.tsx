@@ -30,9 +30,10 @@ interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
   editable?: boolean;
+  onBlur?: () => void;
 }
 
-const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
+const Editor = ({ onChange, initialContent, editable, onBlur }: EditorProps) => {
   const { resolvedTheme } = useTheme();
   const { edgestore } = useEdgeStore();
 
@@ -76,6 +77,7 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
         onChange={() => {
           onChange(JSON.stringify(editor.document, null, 2));
         }}
+        onBlur={onBlur}
         slashMenu={false}
       >
         <SuggestionMenuController
