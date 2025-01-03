@@ -1,5 +1,6 @@
 "use client";
 import { BlockNoteEditor } from "@blocknote/core";
+import { DefaultReactSuggestionItem } from "@blocknote/react";
 // import "@blocknote/core/style.css";
 import { ImMagicWand } from "react-icons/im";
 
@@ -39,7 +40,9 @@ const insertMagicAi = async (editor: BlockNoteEditor) => {
   }
 };
 
-const insertMagicItem = (editor: BlockNoteEditor) => ({
+const insertMagicItem = (
+  editor: BlockNoteEditor
+): DefaultReactSuggestionItem => ({
   title: "Continue with AI",
   onItemClick: async () => {
     insertMagicAi(editor);
