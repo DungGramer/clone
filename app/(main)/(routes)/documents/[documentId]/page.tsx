@@ -27,18 +27,16 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
   const update = useMutation(api.documents.update);
   const [localContent, setLocalContent] = useState<string>("");
-  const [isSaving, setIsSaving] = useState(false);
 
   // Save content to the server
   const saveContent = useCallback(async (content: string) => {
-    setIsSaving(true);
     try {
       await update({
         id: params.documentId,
         content,
       });
-    } finally {
-      setIsSaving(false);
+    } catch (err) {
+      console.error('error saving:', err);
     }
   }, [params.documentId, update]);
 
