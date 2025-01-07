@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ output });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.log('API: ', process.env.GEMINI_API_KEY!);
     console.error("Error during API call:", err?.message || err);
     return NextResponse.json(
       { text: "Unable to process the prompt. Please try again.", error: err?.message },
