@@ -5,7 +5,7 @@ import { DefaultReactSuggestionItem } from "@blocknote/react";
 import { ImMagicWand } from "react-icons/im";
 
 const handleSubmit = async (prevText: string, prompt = "Continue the text") => {
-  const response = await fetch("/api/generate", {
+  const response = await fetch("https://propozel-backend.onrender.com/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt: `${prompt}: "${prevText}"` }),
