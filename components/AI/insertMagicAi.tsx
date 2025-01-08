@@ -4,7 +4,7 @@ import { DefaultReactSuggestionItem } from "@blocknote/react";
 // import "@blocknote/core/style.css";
 import { ImMagicWand } from "react-icons/im";
 
-const handleSubmit = async (prevText: string, prompt = "Continue the text") => {
+export const postGenerateAI = async (prevText: string, prompt = "Continue the text") => {
   const response = await fetch("https://propozel-backend.onrender.com/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -21,22 +21,43 @@ const handleSubmit = async (prevText: string, prompt = "Continue the text") => {
 };
 
 const insertMagicAi = async (editor: BlockNoteEditor) => {
-  const prevText = editor._tiptapEditor.state.doc.textBetween(
+  const selection = editor.getSelection();
+  let selectionBlock;
+
+  if (selection) {
+    selectionBlock = selection?.blocks;
+  } else {
+    const startBlock = editor.document[0];
+    const currentPositionBlock = editor.getTextCursorPosition().block;
+
+    // Select all from start to current position
+    editor.setSelection(startBlock, currentPositionBlock);
+    const newSelection = editor.getSelection();
+    // Un-select
+    editor.setTextCursorPosition(currentPositionBlock);
+
+    selectionBlock = newSelection?.blocks;
+  }
+
+  /*  const prevText = editor._tiptapEditor.state.doc.textBetween(
     Math.max(0, editor._tiptapEditor.state.selection.from - 5000),
     editor._tiptapEditor.state.selection.from - 1,
     "\n"
-  );
+  ); */
+
 
   // Call handleSubmit to get AI-generated text
-  const aiGeneratedText = await handleSubmit(prevText);
+  const aiGeneratedText = await postGenerateAI(JSON.stringify(selectionBlock));
 
   // Insert the AI-generated text into the editor
   if (aiGeneratedText) {
-    editor.insertBlocks(
-      [{ type: "paragraph", content: aiGeneratedText }],
+    const blockInserted = editor.insertBlocks(
+      [{ type: "paragraph", content: '' }],
       editor.getTextCursorPosition().block,
       "before"
     );
+
+    editor.updateBlock(blockInserted?.[0], { content: aiGeneratedText });
   }
 };
 

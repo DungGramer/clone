@@ -1,3 +1,4 @@
+import { postGenerateAI } from "@/components/AI/insertMagicAi";
 import "@blocknote/mantine/style.css";
 import {
   useBlockNoteEditor,
@@ -17,9 +18,14 @@ export function AIToolbarButton() {
   //     editor.getActiveStyles().backgroundColor === "blue"
   // );
 
-  const unnestBlock = useCallback(() => {
-    editor.focus();
-    // const selectedText = editor.getSelectedText();
+  const onSubmit = useCallback(async () => {
+    const selectedText = editor.getSelectedText();
+    const aiGeneratedText = await postGenerateAI(selectedText);
+
+    const currentPositionBlock = editor.getTextCursorPosition().block as any;
+    const blockContent = currentPositionBlock?.content;
+    const replacedContent = blockContent?.[0]?.text?.replace(selectedText, aiGeneratedText);
+    editor.updateBlock(currentPositionBlock, { content: replacedContent });
   }, [editor]);
 
   // Check selected blocks
@@ -44,7 +50,7 @@ export function AIToolbarButton() {
   return (
     <Components.FormattingToolbar.Button
       mainTooltip={"Continue your idea with some extra inspiration!"}
-      onClick={unnestBlock}
+      onClick={onSubmit}
       // isSelected={isSelected}
       icon={<Bot size={24} />}
     >
