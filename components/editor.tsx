@@ -28,6 +28,7 @@ import { useMemo } from "react";
 import { schema } from "./PageBreakBlock";
 
 import { AIToolbarButton } from "@/components/AI/AIToolbarButton";
+import insertIframeItem from "@/components/iframe/IframeWrapper";
 import {
   BasicTextStyleButton,
   BlockTypeSelect,
@@ -69,6 +70,9 @@ const Editor = ({
 
   const editor = useCreateBlockNote({
     schema: withMultiColumn(schema),
+    // _tiptapOptions: {
+    //   extensions: [IframeExtension],
+    // },
     dropCursor: multiColumnDropCursor,
     initialContent: initialContent ? JSON.parse(initialContent) : undefined,
     uploadFile: handleUpload,
@@ -163,7 +167,8 @@ const Editor = ({
           getDefaultReactSlashMenuItems(editor),
           getMultiColumnSlashMenuItems(editor),
           [insertPageBreak(editor as unknown as never)],
-          [insertMagicItem(editor as unknown as never)]
+          [insertMagicItem(editor as unknown as never)],
+          [insertIframeItem(editor as unknown as never)]
         ),
         query
       );

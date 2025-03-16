@@ -1,3 +1,4 @@
+import { ReactIframeBlock } from "@/components/iframe/IframeWrapper";
 import {
   BlockNoteSchema,
   BlockSchemaWithBlock,
@@ -29,6 +30,7 @@ export const schema = BlockNoteSchema.create({
   blockSpecs: {
     ...defaultBlockSpecs,
     page_break: PageBreakBlock,
+    iframe: ReactIframeBlock,
   },
 });
 

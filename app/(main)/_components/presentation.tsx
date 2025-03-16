@@ -132,7 +132,7 @@ const Presentation = forwardRef<HTMLDivElement, PresentationProps>(
       return () => {
         document.removeEventListener("keydown", handleKeydown);
       };
-    }, [open, nextSlide, enterFullScreen]);
+    }, [open, nextSlide, enterFullScreen, onClose]);
 
     return (
       <section
